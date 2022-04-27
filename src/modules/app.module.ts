@@ -21,9 +21,7 @@ import { UserModule } from './user/user.module';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => {
-        const isProduction = configService.get('STAGE') === 'prod';
         return {
-          ssl: isProduction,
           uri: `${configService.get('DB_URL')}`,
           dbName: `${configService.get('MDB_NAME')}`,
         }
