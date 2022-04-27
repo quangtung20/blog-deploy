@@ -8,8 +8,6 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build && cd client && npm i && npm run build",
-    "build:server":"nest build",
-    "heroku-postbuild": "tsc && cd client && npm i --only=dev && npm i && npm run build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "cross-env STAGE=prod node dist/main",
     "start:dev": "cross-env STAGE=dev nest start --watch",
