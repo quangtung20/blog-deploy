@@ -24,9 +24,6 @@ import { UserModule } from './user/user.module';
         const isProduction = configService.get('STAGE') === 'prod';
         return {
           ssl: isProduction,
-          extra: {
-            ssl: isProduction ? { rejectUnauthorized: false } : null,
-          },
           uri: `${configService.get('DB_URL')}`,
           dbName: `${configService.get('MDB_NAME')}`,
         }
