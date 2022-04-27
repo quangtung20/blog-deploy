@@ -22,8 +22,8 @@ import { UserModule } from './user/user.module';
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => {
         return {
-          uri: `mongodb+srv://quangtung:123456789xx@cluster0.wmzvr.mongodb.net/blog-app?retryWrites=true&w=majority`,
-          dbName: 'blog-app'
+          uri: `${configService.get('DB_URL')}`,
+          dbName: `${configService.get('MDB_NAME')}`,
         }
       }
     }),
