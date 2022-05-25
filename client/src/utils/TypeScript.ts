@@ -63,7 +63,7 @@ export interface IBlog {
   title: string
   content: string
   description: string
-  thumbnail: string | File
+  thumbnail: string | File 
   category: string
   createdAt: string
 }

@@ -4,7 +4,8 @@ import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
 import { PassportModule } from '@nestjs/passport';
 import { User, UserSchema } from 'src/database/schemas/user.schema';
-import { JwtStrategy } from '../../config/jwt.strategy';
+import { JwtStrategy } from './jwt.strategy';
+import { ShareModule } from '../share/share.module';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 
@@ -12,6 +13,7 @@ import { AuthService } from './auth.service';
   imports: [
     PassportModule.register({ defaultStrategy: 'jwt' }),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    ShareModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],

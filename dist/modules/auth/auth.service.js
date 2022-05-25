@@ -20,13 +20,14 @@ const mongoose_1 = require("@nestjs/mongoose");
 const bcrypt = require("bcrypt");
 const google_auth_library_1 = require("google-auth-library");
 const mongoose_2 = require("mongoose");
-const sendMail_1 = require("../../config/sendMail");
-const user_schema_1 = require("../../database/schemas/user.schema");
 const node_fetch_1 = require("node-fetch");
+const user_schema_1 = require("../../database/schemas/user.schema");
+const share_service_1 = require("../share/share.service");
 let AuthService = class AuthService {
-    constructor(jwtService, configService, userModel) {
+    constructor(jwtService, configService, shareService, userModel) {
         this.jwtService = jwtService;
         this.configService = configService;
+        this.shareService = shareService;
         this.userModel = userModel;
         this.client = new google_auth_library_1.OAuth2Client(`${process.env.MAIL_CLIENT_ID}`);
         this.clientUrl = this.configService.get('CLIENT_URL');
@@ -44,7 +45,7 @@ let AuthService = class AuthService {
             };
             const active_token = await this.jwtService.sign({ newUser }, { expiresIn: '1d' });
             const url = `${this.clientUrl}/active/${active_token}`;
-            (0, sendMail_1.default)(account, url, "verify your email address");
+            this.shareService.sendEmail(account, url, "verify your email address");
             return {
                 msg: 'Success! Please check your email.',
             };
@@ -222,7 +223,7 @@ let AuthService = class AuthService {
             }
             const access_token = await this.jwtService.sign({ id: user._id });
             const url = `${this.clientUrl}/reset_password/${access_token}`;
-            (0, sendMail_1.default)(account, url, "verify your email address");
+            this.shareService.sendEmail(account, url, "verify your email address");
             return { msg: "Success! Please check your email." };
         }
         catch (error) {
@@ -232,9 +233,10 @@ let AuthService = class AuthService {
 };
 AuthService = __decorate([
     (0, common_1.Injectable)(),
-    __param(2, (0, mongoose_1.InjectModel)(user_schema_1.User.name)),
+    __param(3, (0, mongoose_1.InjectModel)(user_schema_1.User.name)),
     __metadata("design:paramtypes", [jwt_1.JwtService,
         config_1.ConfigService,
+        share_service_1.ShareService,
         mongoose_2.Model])
 ], AuthService);
 exports.AuthService = AuthService;

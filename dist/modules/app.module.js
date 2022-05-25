@@ -17,6 +17,7 @@ const blog_module_1 = require("./blog/blog.module");
 const category_module_1 = require("./category/category.module");
 const comment_module_1 = require("./comment/comment.module");
 const user_module_1 = require("./user/user.module");
+const share_module_1 = require("./share/share.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -44,6 +45,7 @@ AppModule = __decorate([
             category_module_1.CategoryModule,
             blog_module_1.BlogModule,
             comment_module_1.CommentModule,
+            share_module_1.ShareModule,
         ],
     })
 ], AppModule);

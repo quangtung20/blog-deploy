@@ -4,12 +4,12 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import * as bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
-import { JWT, OAuth2Client } from 'google-auth-library';
+import { OAuth2Client } from 'google-auth-library';
 import { Model } from "mongoose";
-import { INewUser, IUser } from 'src/config/interface';
-import sendEmail from 'src/config/sendMail';
-import { User, UserDocument } from 'src/database/schemas/user.schema';
 import fetch from 'node-fetch';
+import { INewUser, IUser } from 'src/config/interface';
+import { User, UserDocument } from 'src/database/schemas/user.schema';
+import { ShareService } from '../share/share.service';
 
 
 @Injectable()
@@ -17,6 +17,7 @@ export class AuthService {
     constructor(
         private jwtService: JwtService,
         private configService: ConfigService,
+        private shareService:ShareService,
         @InjectModel(User.name) private userModel: Model<UserDocument>
     ) { }
 
@@ -40,7 +41,7 @@ export class AuthService {
 
             const url = `${this.clientUrl}/active/${active_token}`
 
-            sendEmail(account, url, "verify your email address");
+            this.shareService.sendEmail(account, url, "verify your email address");
             return {
                 msg: 'Success! Please check your email.',
             }
@@ -247,7 +248,7 @@ export class AuthService {
             const access_token = await this.jwtService.sign({ id: user._id });
 
             const url = `${this.clientUrl}/reset_password/${access_token}`;
-            sendEmail(account, url, "verify your email address");
+            this.shareService.sendEmail(account, url, "verify your email address");
 
             return { msg: "Success! Please check your email." }
 

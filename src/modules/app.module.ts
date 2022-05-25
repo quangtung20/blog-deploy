@@ -8,6 +8,7 @@ import { BlogModule } from './blog/blog.module';
 import { CategoryModule } from './category/category.module';
 import { CommentModule } from './comment/comment.module';
 import { UserModule } from './user/user.module';
+import { ShareModule } from './share/share.module';
 
 
 
@@ -36,6 +37,7 @@ import { UserModule } from './user/user.module';
     CategoryModule,
     BlogModule,
     CommentModule,
+    ShareModule,
   ],
 })
 export class AppModule { }

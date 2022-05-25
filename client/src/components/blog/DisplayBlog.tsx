@@ -83,10 +83,13 @@ const DisplayBlog: React.FC<IProps> = ({blog}) => {
             `By: ${blog.user.name}`
           }
         </small>
-
+        
         <small className="ms-2">
           { new Date(blog.createdAt).toLocaleString() }
         </small>
+
+        <img src={blog.thumbnail as (string|undefined)} className="card-img-top p-2" alt="..."
+        style={{width:'100vh', objectFit: 'cover', borderRadius:'11px', border:'2px solid black', display:'block', margin:'3vh auto'}} />
       </div>
 
       <div dangerouslySetInnerHTML={{

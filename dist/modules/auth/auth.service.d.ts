@@ -1,10 +1,3 @@
-/// <reference types="mongoose/types/pipelinestage" />
-/// <reference types="mongoose/types/connection" />
-/// <reference types="mongoose/types/cursor" />
-/// <reference types="mongoose/types/document" />
-/// <reference types="mongoose/types/error" />
-/// <reference types="mongoose/types/mongooseoptions" />
-/// <reference types="mongoose/types/schemaoptions" />
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Request, Response } from 'express';
@@ -12,11 +5,13 @@ import { OAuth2Client } from 'google-auth-library';
 import { Model } from "mongoose";
 import { INewUser, IUser } from 'src/config/interface';
 import { User, UserDocument } from 'src/database/schemas/user.schema';
+import { ShareService } from '../share/share.service';
 export declare class AuthService {
     private jwtService;
     private configService;
+    private shareService;
     private userModel;
-    constructor(jwtService: JwtService, configService: ConfigService, userModel: Model<UserDocument>);
+    constructor(jwtService: JwtService, configService: ConfigService, shareService: ShareService, userModel: Model<UserDocument>);
     client: OAuth2Client;
     clientUrl: any;
     register(newUserDto: INewUser): Promise<{
